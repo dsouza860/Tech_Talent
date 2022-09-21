@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/fundo"
+    tools:context=".CadastroProjeto">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cadastro de Projetos"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"/>
+    <EditText
+        android:id="@+id/edNome"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:hint="Nome do Projeto"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:paddingLeft="25dp"
+        android:textColorHint="@color/white"/>
+    <EditText
+        android:id="@+id/edDescricao"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:hint="Descrição do projeto"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:paddingLeft="25dp"/>
+    <EditText
+        android:id="@+id/edData"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="Data"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:paddingLeft="20dp"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:id="@+id/edQtdPessoas"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:hint="Quantidade Pessoas"
+        android:inputType="number"
+        android:paddingLeft="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp">
+        <Button
+            android:id="@+id/btnCadastrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:backgroundTint="@color/white"
+            android:textSize="15dp"
+            android:padding="10dp"
+            android:text="Cadastrar"
+            android:layout_marginLeft="50dp"
+            android:textColor="#000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnEditar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="15dp"
+            android:padding="10dp"
+            android:backgroundTint="@color/white"
+            android:text="Editar"
+            android:textColor="#000"
+            app:layout_constraintStart_toEndOf="@+id/btnCadastrar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnExcluir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="@color/white"
+            android:padding="10dp"
+            android:text="Excluir"
+            android:textColor="#000"
+            android:textSize="15dp"
+            app:layout_constraintStart_toEndOf="@+id/btnEditar"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
