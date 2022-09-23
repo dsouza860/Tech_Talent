@@ -137,6 +137,7 @@ public class CadastroProjeto extends AppCompatActivity {
             }
         });
         btnExcluir.setOnClickListener (new View.OnClickListener () {
+            String url = "https://tech-talent.hasura.app/api/rest/projects/id";
             @Override
             public void onClick(View view) {
                 StringRequest deleteRequest = new StringRequest (Request.Method.DELETE, url, new Response.Listener<String> () {
