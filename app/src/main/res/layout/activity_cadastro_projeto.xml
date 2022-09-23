@@ -16,16 +16,29 @@
         android:layout_marginTop="40dp"
         android:gravity="center"/>
     <EditText
-        android:id="@+id/edNome"
+        android:id="@+id/edId"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:hint="Nome do Projeto"
+        android:hint="ID"
         android:textSize="20dp"
         android:textColor="@color/white"
         android:layout_gravity="center"
         android:paddingLeft="25dp"
         android:textColorHint="@color/white"/>
+
+    <EditText
+        android:id="@+id/edNome"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:hint="Nome do Projeto"
+        android:paddingLeft="25dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20dp" />
+
     <EditText
         android:id="@+id/edDescricao"
         android:layout_width="350dp"

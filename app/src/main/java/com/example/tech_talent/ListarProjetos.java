@@ -1,88 +1,76 @@
 package com.example.tech_talent;
 
-import static com.android.volley.Request.*;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.app.DownloadManager;
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.tech_talent.model.Projetos;
 //import com.example.tech_talent.model.ProjetosAdapter;
-import com.example.tech_talent.model.ProjetosAdapter;
-import com.example.tech_talent.model.ProjetosRest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 public class ListarProjetos extends AppCompatActivity{
-
+    TextView listaProjetos;
+    RequestQueue requestQueue;
+    private static final String url = "https://tech-talent.hasura.app/api/rest/projects";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_projetos);
-
-        final ListView lista = (ListView) findViewById(R.id.lvProjetos);
-        ProjetosRest projetosRest = ProjetosRest.retrofit.create(ProjetosRest.class);
-
-        ProgressDialog dialog = new ProgressDialog(ListarProjetos.this);
-        dialog.setMessage("Carregando");
-        dialog.setCancelable(false);
-        dialog.show();
-        final Call<List<Projetos>> call = projetosRest.getProjetos();
-        call.enqueue(new Callback<List<Projetos>>() {
+        listaProjetos = findViewById (R.id.listaProjetos);
+        requestQueue = Volley.newRequestQueue (this);
+        jsonObjectRequest ();
+    }
+    private void jsonObjectRequest(){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest (
+                Request.Method.GET, url, null, new Response.Listener<JSONObject> () {
             @Override
-            public void onResponse(Call<List<Projetos>> call, Response<List<Projetos>> response) {
-                if(dialog.isShowing())
-                    dialog.dismiss();
-                    final List<Projetos> listaProjetos = response.body();
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray ("projects");
+                    for (int i = 0; i < jsonArray.length (); i++){
+                        JSONObject projects = jsonArray.getJSONObject (i);
+                        String id = projects.getString ("id");
+                        String title = projects.getString ("title");
+                        String description = projects.getString ("description");
+                        String start_date = projects.getString ("start_date");
+                        String expected_end_date = projects.getString ("expected_end_date");
+                        String amount_people = projects.getString ("amount_people");
+                        listaProjetos.append ("ID: "+ id +", \n" + "Projeto: " + title + ", \n"+"Descrição: " + description + ", \n"+"Data Inicial: "
+                                + start_date + ", \n" +"Data Prevista: "+ expected_end_date + ", \n"+"Quantidade Pessoa: " + amount_people + "\n\n");
 
-                if(listaProjetos != null){
-                    ProjetosAdapter adapter = new ProjetosAdapter(getBaseContext(), listaProjetos);
-                    lista.setAdapter(adapter);
-
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace ();
                 }
             }
-
+        }, new Response.ErrorListener () {
             @Override
-            public void onFailure(Call<List<Projetos>> call, Throwable t) {
-                if(dialog.isShowing())
-                    dialog.dismiss();
-                Toast.makeText(getBaseContext(), "Problema de acesso", Toast.LENGTH_SHORT).show();
+            public void onErrorResponse(VolleyError error) {
+
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap header = new HashMap<>();
+                header.put("Content-Type", "application/json");
+                header.put("x-hasura-access-key", "CQOsnv00PT6e7E8UY06ti0tmFgs4GGT7DZrnZvJqS649gBVFUSH1dmiRpmIJdsd4");
+
+                return header;
+            }
+        };
+        requestQueue.add (jsonObjectRequest);
     }
 }

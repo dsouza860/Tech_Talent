@@ -1,4 +1,4 @@
-package com.example.tech_talent.model;
+package com.example.tech_talent;
 
 public class Projetos {
     private String id;
